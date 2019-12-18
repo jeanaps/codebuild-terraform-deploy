@@ -72,3 +72,23 @@ Resources:
       Tags:
         - Key: Project
           Value: Run Terraform From CodeBuild
+      Triggers:
+        Webhook: true
+        FilterGroups:
+          - - Type: EVENT
+              Pattern: PUSH,PULL_REQUEST_CREATED,PULL_REQUEST_UPDATED
+  DYNAMOTFSTATE:
+    Type: 'AWS::DynamoDB::Table'
+    Properties:
+      TableName: terraform-lock
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
+      KeySchema:
+        -
+          AttributeName: "tfstate"
+          KeyType: "HASH"
+      AttributeDefinitions: 
+        - 
+          AttributeName: "tfstate"
+          AttributeType: "S"
