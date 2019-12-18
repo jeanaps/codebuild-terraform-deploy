@@ -17,7 +17,7 @@ variable "instance_type" {
 
 resource "aws_instance" "ec2_instance" {
  ami = "ami-0cf31d971a3ca20d6"
- instance_type = "${var.instance_type}"
+ instance_type = var.instance_type
 }
 
 output "ip" {
