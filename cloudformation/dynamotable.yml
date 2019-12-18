@@ -1,0 +1,23 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: 'A codebuild system to run terraform '
+Parameters:
+  DataPartName:
+    Description: the data part name as appear in the cloudformation stack name
+    Type: String
+    Default: mydataname
+Resources:
+  DYNAMOTFSTATE:
+    Type: 'AWS::DynamoDB::Table'
+    Properties:
+      TableName: terraform-lock
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
+      KeySchema:
+        -
+          AttributeName: "tfstate"
+          KeyType: "HASH"
+      AttributeDefinitions: 
+        - 
+          AttributeName: "tfstate"
+          AttributeType: "S"
